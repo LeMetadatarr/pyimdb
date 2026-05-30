@@ -49,7 +49,7 @@ IMDb's WAF returns **HTTP 202** to bare requests, so the page crawl is gated.
 Configure an external solver to clear it:
 
 ```bash
-export PYIMDB_FLARESOLVERR_URL=http://host:8191
+export PYIMDB_FLARESOLVERR_URL=http://localhost:8191
 ```
 
 The suggestion API and bulk datasets are the working paths and cover almost all

@@ -1,7 +1,7 @@
 """Best-effort page crawl of a title page.
 
 IMDb's WAF returns HTTP 202 to bare requests; this raises RuntimeError unless a
-solver is configured. Set ``PYIMDB_FLARESOLVERR_URL=http://host:8191`` to clear
+solver is configured. Set ``PYIMDB_FLARESOLVERR_URL=http://localhost:8191`` to clear
 the challenge and return live HTML.
 """
 import pyimdb

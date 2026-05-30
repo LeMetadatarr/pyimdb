@@ -107,7 +107,7 @@ looking for challenge markers (`just a moment`, `challenge-platform`, `cf-mitiga
 To get live HTML you must route the transport through FlareSolverr:
 
 ```bash
-export PYIMDB_FLARESOLVERR_URL=http://localhost:8191
+export PYIMDB_FLARESOLVERR_URL=http://localhttp://localhost:8191
 ```
 
 ### What the client parses (when it gets real HTML)
