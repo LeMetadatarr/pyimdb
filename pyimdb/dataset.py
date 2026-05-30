@@ -14,8 +14,8 @@ config          source dump                   join key
 ``episodes``    title.episode                 ``imdb_id`` × ``series_id``
 ==============  ============================  ====================================
 
-Every row carries ``imdb_id`` so the configs join cleanly and stay anchored to
-metadatarr's dominant-ID chain.
+Every row carries ``imdb_id`` so the configs join cleanly for cross-referencing
+across sources.
 
 PROVENANCE: IMDb bulk datasets are **personal / non-commercial use only**. See
 ``PROVENANCE.md`` and ``docs/dataset.md``. Do not redistribute commercially.

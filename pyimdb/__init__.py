@@ -7,7 +7,7 @@ Three live data paths, in order of reliability:
 - :mod:`pyimdb.title` / :mod:`pyimdb.name` — **page crawl**, best-effort and
   WAF-gated (HTTP 202); needs a FlareSolverr solver via the ``PYIMDB`` env.
 
-:mod:`pyimdb.ids` emits the canonical ``imdb_id`` anchor for metadatarr.
+:mod:`pyimdb.ids` emits the canonical ``imdb_id`` anchor for cross-referencing across sources.
 """
 from pyimdb.version import __version__
 from pyimdb.models import (
@@ -88,7 +88,7 @@ __all__ = [
     "parse_title",
     "get_name",
     "parse_name",
-    # ids / metadatarr
+    # ids / external-id converters
     "ids",
     "canonical_imdb_id",
     "is_title_id",

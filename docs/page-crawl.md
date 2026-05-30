@@ -21,7 +21,7 @@ To get live HTML you must route the transport through a solver that runs a real
 browser. `pyimdb` uses `unblock_requests` with the `PYIMDB` env prefix:
 
 ```bash
-export PYIMDB_FLARESOLVERR_URL=http://192.168.1.116:8191
+export PYIMDB_FLARESOLVERR_URL=http://localhost:8191
 # optional:
 export PYIMDB_FLARESOLVERR_TIMEOUT=60000      # ms
 export PYIMDB_WAYBACK_FALLBACK=1              # fall back to the Internet Archive

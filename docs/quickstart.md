@@ -28,7 +28,7 @@ pyimdb.search_names("greta gerwig")    # nm… only
 top = pyimdb.first("dune part two")    # best hit or None
 ```
 
-Every hit carries the canonical `imdb_id` — see [ids / metadatarr](ids.md).
+Every hit carries the canonical `imdb_id` — see [ids / external-id converters](ids.md).
 
 ## Bulk datasets
 

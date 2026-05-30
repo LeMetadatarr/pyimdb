@@ -9,6 +9,13 @@ description = "Python metadata client for IMDb (suggestion API + bulk datasets +
 license = { text = "Apache-2.0" }
 authors = [{ name = "JarbasAi", email = "jarbasai@mailfence.com" }]
 requires-python = ">=3.8"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Multimedia :: Video",
+    "Intended Audience :: Developers",
+]
 dependencies = [
     "requests",
     "unblock_requests",
@@ -21,6 +28,8 @@ test = ["pytest"]
 
 [project.urls]
 Homepage = "https://github.com/TigreGotico/pyimdb"
+Repository = "https://github.com/TigreGotico/pyimdb"
+Issues = "https://github.com/TigreGotico/pyimdb/issues"
 
 [tool.setuptools.dynamic]
 version = { attr = "pyimdb.version.__version__" }

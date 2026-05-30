@@ -1,4 +1,4 @@
-"""Resolve a query to its canonical imdb_id and emit a metadatarr extra dict."""
+"""Resolve a query to its canonical imdb_id and emit an external-id dict."""
 import json
 
 import pyimdb

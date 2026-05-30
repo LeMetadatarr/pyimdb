@@ -1,15 +1,14 @@
-# IDs and metadatarr
+# IDs and external-id converters
 
-`pyimdb.ids` converts models into `ExternalIds.extra` dicts (the mediavocab
-key-space) for the metadatarr provider.
+`pyimdb.ids` converts models into flat `str -> str` dicts of namespaced external
+IDs, anchored on `imdb_id`, for cross-referencing across sources.
 
 ## The `imdb_id` anchor
 
 The headline key is **`imdb_id`** — emitted for *both* titles (`tt…`) and
-names (`nm…`). IMDb's id is the dominant cross-reference anchor in metadatarr's
-dominant-ID chain: nearly every other media-metadata source (TMDb, TVDB, Trakt,
-Wikidata, …) carries an IMDb id, so a clean `imdb_id` lets metadatarr fan a
-single pyimdb hit out to the rest of the graph.
+names (`nm…`). Nearly every other media-metadata source (TMDb, TVDB, Trakt,
+Wikidata, …) carries an IMDb id, so a clean `imdb_id` enables cross-referencing
+across sources.
 
 ```python
 import pyimdb

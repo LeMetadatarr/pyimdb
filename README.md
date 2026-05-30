@@ -1,7 +1,7 @@
 # pyimdb
 
 Python metadata client for IMDb. Resolves free-text queries to canonical IMDb
-ids and pulls structured metadata for media cataloguing (it feeds metadatarr).
+ids and pulls structured metadata.
 Scrapes **structured metadata only** — never media files.
 
 Three data paths, in order of reliability:
@@ -30,7 +30,7 @@ import pyimdb
 for hit in pyimdb.search("inception"):
     print(hit.imdb_id, hit.year, hit.label)
 
-# canonical id + metadatarr extra dict
+# canonical id + external-id dict
 hit = pyimdb.first("dune part two")
 pyimdb.canonical_imdb_id(hit)      # "tt15239678"
 pyimdb.hit_to_extra(hit)           # {"imdb_id": "tt15239678", ...}
@@ -67,7 +67,7 @@ The IMDb bulk datasets are **personal and non-commercial use only**. See
 - [Bulk datasets](docs/bulk-datasets.md)
 - [Page crawl & caveats](docs/page-crawl.md)
 - [Models](docs/models.md)
-- [IDs / metadatarr](docs/ids.md)
+- [IDs / external-id converters](docs/ids.md)
 - [HF datasets](docs/dataset.md)
 
 ## TODO

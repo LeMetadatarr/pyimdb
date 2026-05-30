@@ -27,8 +27,8 @@ memory.
 | `crew` | title.crew | `imdb_id` (tconst) | directors, writers |
 | `episodes` | title.episode | `imdb_id`×`series_id` | season_number, episode_number |
 
-Every row carries `imdb_id`, so the configs join cleanly and stay anchored to
-metadatarr's dominant-ID chain.
+Every row carries `imdb_id`, so the configs join cleanly for cross-referencing
+across sources.
 
 ## Streaming rows
 
