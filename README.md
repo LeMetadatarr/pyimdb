@@ -69,6 +69,7 @@ The IMDb bulk datasets are **personal and non-commercial use only**. See
 - [Models](docs/models.md)
 - [IDs / external-id converters](docs/ids.md)
 - [HF datasets](docs/dataset.md)
+- [Reverse-engineered endpoints](docs/reverse-engineering.md)
 
 ## TODO
 
