@@ -1,0 +1,507 @@
+{
+  "data": {
+    "title": {
+      "id": "tt0111161",
+      "titleText": {
+        "text": "The Shawshank Redemption"
+      },
+      "titleType": {
+        "id": "movie",
+        "text": "Movie"
+      },
+      "releaseYear": {
+        "year": 1994,
+        "endYear": null
+      },
+      "runtime": {
+        "seconds": 8520
+      },
+      "ratingsSummary": {
+        "aggregateRating": 9.3,
+        "voteCount": 3192642
+      },
+      "plot": {
+        "plotText": {
+          "plainText": "A wrongfully convicted banker forms a close friendship with a hardened convict over a quarter century while retaining his humanity through simple acts of compassion."
+        }
+      },
+      "genres": {
+        "genres": [
+          {
+            "text": "Drama"
+          }
+        ]
+      },
+      "primaryImage": {
+        "url": "https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_.jpg",
+        "width": 1200,
+        "height": 1800
+      },
+      "principalCredits": [
+        {
+          "category": {
+            "id": "director",
+            "text": "Director"
+          },
+          "credits": [
+            {
+              "name": {
+                "id": "nm0001104",
+                "nameText": {
+                  "text": "Frank Darabont"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "category": {
+            "id": "writer",
+            "text": "Writers"
+          },
+          "credits": [
+            {
+              "name": {
+                "id": "nm0000175",
+                "nameText": {
+                  "text": "Stephen King"
+                }
+              }
+            },
+            {
+              "name": {
+                "id": "nm0001104",
+                "nameText": {
+                  "text": "Frank Darabont"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "category": {
+            "id": "cast",
+            "text": "Stars"
+          },
+          "credits": [
+            {
+              "name": {
+                "id": "nm0000209",
+                "nameText": {
+                  "text": "Tim Robbins"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Andy Dufresne"
+                }
+              ]
+            },
+            {
+              "name": {
+                "id": "nm0000151",
+                "nameText": {
+                  "text": "Morgan Freeman"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Ellis Boyd 'Red' Redding"
+                }
+              ]
+            },
+            {
+              "name": {
+                "id": "nm0348409",
+                "nameText": {
+                  "text": "Bob Gunton"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Warden Norton"
+                }
+              ]
+            },
+            {
+              "name": {
+                "id": "nm0006669",
+                "nameText": {
+                  "text": "William Sadler"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Heywood"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "akas": {
+        "edges": [
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "AE",
+                "text": "United Arab Emirates"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "AU",
+                "text": "Australia"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "CH",
+                "text": "Switzerland"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "GB",
+                "text": "United Kingdom"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "IE",
+                "text": "Ireland"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "IN",
+                "text": "India"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "IS",
+                "text": "Iceland"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "MY",
+                "text": "Malaysia"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "NZ",
+                "text": "New Zealand"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "PH",
+                "text": "Philippines"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "PK",
+                "text": "Pakistan"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "SG",
+                "text": "Singapore"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "US",
+                "text": "United States"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "XAS",
+                "text": "Asia"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "XEU",
+                "text": "Europe"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "XWW",
+                "text": "World-wide"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "The Shawshank Redemption",
+              "country": {
+                "id": "ZA",
+                "text": "South Africa"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Sue\u00f1o de fuga",
+              "country": {
+                "id": "MX",
+                "text": "Mexico"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Sue\u00f1o de fuga",
+              "country": {
+                "id": "MX",
+                "text": "Mexico"
+              },
+              "language": null
+            }
+          }
+        ]
+      },
+      "certificates": {
+        "edges": [
+          {
+            "node": {
+              "rating": "16",
+              "ratingReason": null,
+              "country": {
+                "id": "AR",
+                "text": "Argentina"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "13",
+              "ratingReason": null,
+              "country": {
+                "id": "AR",
+                "text": "Argentina"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "MA15+",
+              "ratingReason": null,
+              "country": {
+                "id": "AU",
+                "text": "Australia"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "16",
+              "ratingReason": null,
+              "country": {
+                "id": "BR",
+                "text": "Brazil"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "14A",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "14A",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "PA",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "18",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "AA",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "13+",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          }
+        ]
+      },
+      "isAdult": false,
+      "releaseDate": {
+        "day": 14,
+        "month": 10,
+        "year": 1994,
+        "country": {
+          "id": "US",
+          "text": "United States"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "disclaimer": "Public, commercial, and/or non-private use of the IMDb data provided by this API is not allowed. For limited non-commercial use of IMDb data and the associated requirements see https://help.imdb.com/article/imdb/general-information/can-i-use-imdb-data-in-my-software/G5JTRESSHJBBHTGX#",
+    "experimentalFields": {
+      "janet": []
+    }
+  }
+}

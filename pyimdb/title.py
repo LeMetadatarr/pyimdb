@@ -9,7 +9,7 @@ environments with ``HTTP 202`` and a challenge stub (no ld+json, no
 To get live HTML you must point the transport at an external solver
 (FlareSolverr) via the ``PYIMDB`` env knobs, e.g.::
 
-    PYIMDB_FLARESOLVERR_URL=http://localhttp://localhost:8191
+    PYIMDB_FLARESOLVERR_URL=http://localhost:8191
 
 This module parses whatever HTML the transport returns:
 

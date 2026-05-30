@@ -1,9 +1,11 @@
 """pyimdb — Python metadata client for IMDb.
 
-Three live data paths, in order of reliability:
+Four live data paths, in order of reliability / richness:
 
 - :mod:`pyimdb.search` — the **suggestion API** (no key, not WAF-gated).
 - :mod:`pyimdb.bulk` — the **bulk datasets** (no key; streaming gzip TSV).
+- :mod:`pyimdb.graphql` — **GraphQL live detail** (``caching.graphql.imdb.com``);
+  not WAF-gated, no key; rich cast/plot/akas/certs per title or person.
 - :mod:`pyimdb.title` / :mod:`pyimdb.name` — **page crawl**, best-effort and
   WAF-gated (HTTP 202); needs a FlareSolverr solver via the ``PYIMDB`` env.
 
@@ -51,6 +53,16 @@ from pyimdb.ids import (
 )
 from pyimdb.name import get_name, parse_name
 from pyimdb.title import get_title, parse_title
+from pyimdb.graphql import (
+    get_title_detail,
+    get_name_detail,
+    TitleDetail,
+    NameDetail,
+    CreditEntry,
+    AkaEntry,
+    CertificateEntry,
+    KnownForEntry,
+)
 from pyimdb.transport import reset_session, set_delay, set_session
 
 __all__ = [
@@ -83,6 +95,15 @@ __all__ = [
     "bulk_find_title",
     "bulk_find_name",
     "find_rating",
+    # GraphQL live detail
+    "get_title_detail",
+    "get_name_detail",
+    "TitleDetail",
+    "NameDetail",
+    "CreditEntry",
+    "AkaEntry",
+    "CertificateEntry",
+    "KnownForEntry",
     # page crawl (best-effort)
     "get_title",
     "parse_title",

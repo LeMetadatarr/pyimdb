@@ -107,7 +107,7 @@ looking for challenge markers (`just a moment`, `challenge-platform`, `cf-mitiga
 To get live HTML you must route the transport through FlareSolverr:
 
 ```bash
-export PYIMDB_FLARESOLVERR_URL=http://localhttp://localhost:8191
+export PYIMDB_FLARESOLVERR_URL=http://localhost:8191
 ```
 
 ### What the client parses (when it gets real HTML)
@@ -169,13 +169,130 @@ stream_rows`; nothing is loaded entirely into memory.
 
 ### Status
 
-The constant `GRAPHQL_BASE = "https://caching.graphql.imdb.com"` is defined in
-`pyimdb/transport.py`, but **no module in the current codebase sends any request
-to this host**. The `README.md` lists it as a future enrichment path ("Wire up
-GraphQL enrichment path … not yet implemented").
+**Active — verified live.** IMDb's web app sends GraphQL queries to this
+endpoint. It accepts raw POST requests with no authentication token and is
+**not WAF-gated** — plain HTTPS works without any solver.
 
-This endpoint is therefore not documented here. If it is implemented in a future
-version, this page will be updated.
+Implemented in `pyimdb/graphql.py`.
+
+### Endpoint
+
+```
+POST https://caching.graphql.imdb.com/
+```
+
+### Required headers
+
+```
+accept:               application/graphql+json, application/json
+content-type:         application/json
+origin:               https://www.imdb.com
+referer:              https://www.imdb.com/
+x-imdb-client-name:  imdb-web-next
+x-imdb-user-language: en-US
+x-imdb-user-country: US
+```
+
+The `origin` + `referer` headers appear to be the access gate — requests
+without them (or with wrong values) are blocked by Amazon Midway auth.
+
+### Request shape
+
+```json
+{
+  "query": "...",
+  "variables": { "id": "tt0111161" }
+}
+```
+
+IMDb's own web app also sends GET requests with
+`?operationName=…&extensions={"persistedQuery":{"sha256Hash":"…"}}` for
+cached (persisted) queries. The raw POST approach used here does not
+require knowing the hash — the endpoint accepts any valid query string.
+
+### Title detail — `TitleDetail`
+
+Operation name used internally: `TitleDetail`. Fields retrieved and verified:
+
+| GraphQL field | Model field | Notes |
+| --- | --- | --- |
+| `title.id` | `imdb_id` | `tt…` |
+| `title.titleText.text` | `primary_title` | |
+| `title.titleType.id` | `title_type` | `"movie"`, `"tvSeries"`, … |
+| `title.titleType.text` | `title_type_text` | human label |
+| `title.releaseYear.year` | `start_year` | |
+| `title.releaseYear.endYear` | `end_year` | series only |
+| `title.runtime.seconds` | `runtime_seconds` | divide by 60 for minutes |
+| `title.ratingsSummary.aggregateRating` | `average_rating` | |
+| `title.ratingsSummary.voteCount` | `num_votes` | |
+| `title.plot.plotText.plainText` | `plot` | short synopsis |
+| `title.genres.genres[].text` | `genres` | list of strings |
+| `title.primaryImage.{url,width,height}` | `image_url`, `image_width`, `image_height` | |
+| `title.isAdult` | `is_adult` | bool |
+| `title.releaseDate.{day,month,year}` | `release_day/month/year` | |
+| `title.releaseDate.country.text` | `release_country` | |
+| `title.principalCredits[].category.id` + `.credits[].name` | `credits` (→ `CreditEntry`) | directors, writers, cast |
+| Cast `... on Cast { characters }` | `CreditEntry.characters` | character names via inline fragment |
+| `title.akas(first: N).edges[].node` | `akas` (→ `AkaEntry`) | text, country, language |
+| `title.certificates(first: N).edges[].node` | `certificates` (→ `CertificateEntry`) | rating + country |
+
+Connections that require pagination (`akas`, `certificates`, `principalCredits`)
+require the `first` or `last` parameter.  The `Cast` type is a union member, so
+`characters` must be accessed via an inline fragment `... on Cast { characters { name } }`.
+
+### Name detail — `NameDetail`
+
+Operation name: `NameDetail`. Fields retrieved and verified:
+
+| GraphQL field | Model field |
+| --- | --- |
+| `name.id` | `imdb_id` |
+| `name.nameText.text` | `primary_name` |
+| `name.birthDate.dateComponents.{year,month,day}` | `birth_year/month/day` |
+| `name.deathDate.dateComponents.{year,month,day}` | `death_year/month/day` |
+| `name.primaryProfessions[].category.text` | `primary_professions` |
+| `name.primaryImage.{url,width,height}` | `image_url/width/height` |
+| `name.knownFor(first: N).edges[].node.title` | `known_for` (→ `KnownForEntry`) |
+| `name.bio.text.plainText` | `bio` |
+
+### Response example (abridged)
+
+```json
+{
+  "data": {
+    "title": {
+      "id": "tt0111161",
+      "titleText": { "text": "The Shawshank Redemption" },
+      "titleType": { "id": "movie", "text": "Movie" },
+      "releaseYear": { "year": 1994, "endYear": null },
+      "runtime": { "seconds": 8520 },
+      "ratingsSummary": { "aggregateRating": 9.3, "voteCount": 3192642 },
+      "plot": { "plotText": { "plainText": "A wrongfully convicted banker…" } },
+      "genres": { "genres": [{ "text": "Drama" }] },
+      "principalCredits": [
+        {
+          "category": { "id": "director", "text": "Director" },
+          "credits": [{ "name": { "id": "nm0001104", "nameText": { "text": "Frank Darabont" } } }]
+        },
+        {
+          "category": { "id": "cast", "text": "Stars" },
+          "credits": [
+            {
+              "name": { "id": "nm0000209", "nameText": { "text": "Tim Robbins" } },
+              "characters": [{ "name": "Andy Dufresne" }]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+Full responses are saved as offline test fixtures in `tests/fixtures/`:
+- `graphql_title_tt0111161.json` — The Shawshank Redemption
+- `graphql_title_tt1375666.json` — Inception
+- `graphql_name_nm0000151.json` — Morgan Freeman
 
 ---
 
@@ -184,7 +301,7 @@ version, this page will be updated.
 | Endpoint | Documented? | Key? | WAF? | pyimdb status |
 | --- | --- | --- | --- | --- |
 | `v3.sg.media-imdb.com/suggestion/…` | No — private autocomplete backend | None | None | **Active — reliable** |
-| `www.imdb.com/title/<tt>/` | Public HTML | None | Akamai (HTTP 202) | Active — best-effort, UNVERIFIED live |
-| `www.imdb.com/name/<nm>/` | Public HTML | None | Akamai (HTTP 202) | Active — best-effort, UNVERIFIED live |
+| `caching.graphql.imdb.com` | No — private GraphQL | None (origin header gate) | None | **Active — verified live** |
+| `www.imdb.com/title/<tt>/` | Public HTML | None | AWS WAF (HTTP 202) | Active — best-effort, solver needed |
+| `www.imdb.com/name/<nm>/` | Public HTML | None | AWS WAF (HTTP 202) | Active — best-effort, solver needed |
 | `datasets.imdbws.com/*.tsv.gz` | **Yes — official** | None | None | **Active — reliable** |
-| `caching.graphql.imdb.com` | No — private GraphQL | Not observed | Yes (same origin as site) | **Not implemented** |

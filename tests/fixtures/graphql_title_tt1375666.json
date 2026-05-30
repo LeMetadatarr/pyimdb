@@ -1,0 +1,489 @@
+{
+  "data": {
+    "title": {
+      "id": "tt1375666",
+      "titleText": {
+        "text": "Inception"
+      },
+      "titleType": {
+        "id": "movie",
+        "text": "Movie"
+      },
+      "releaseYear": {
+        "year": 2010,
+        "endYear": null
+      },
+      "runtime": {
+        "seconds": 8880
+      },
+      "ratingsSummary": {
+        "aggregateRating": 8.8,
+        "voteCount": 2821346
+      },
+      "plot": {
+        "plotText": {
+          "plainText": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO, but his tragic past may doom the project and his team to disaster."
+        }
+      },
+      "genres": {
+        "genres": [
+          {
+            "text": "Adventure"
+          },
+          {
+            "text": "Sci-Fi"
+          },
+          {
+            "text": "Thriller"
+          }
+        ]
+      },
+      "primaryImage": {
+        "url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
+        "width": 700,
+        "height": 1037
+      },
+      "principalCredits": [
+        {
+          "category": {
+            "id": "director",
+            "text": "Director"
+          },
+          "credits": [
+            {
+              "name": {
+                "id": "nm0634240",
+                "nameText": {
+                  "text": "Christopher Nolan"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "category": {
+            "id": "writer",
+            "text": "Writer"
+          },
+          "credits": [
+            {
+              "name": {
+                "id": "nm0634240",
+                "nameText": {
+                  "text": "Christopher Nolan"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "category": {
+            "id": "cast",
+            "text": "Stars"
+          },
+          "credits": [
+            {
+              "name": {
+                "id": "nm0000138",
+                "nameText": {
+                  "text": "Leonardo DiCaprio"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Cobb"
+                }
+              ]
+            },
+            {
+              "name": {
+                "id": "nm0330687",
+                "nameText": {
+                  "text": "Joseph Gordon-Levitt"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Arthur"
+                }
+              ]
+            },
+            {
+              "name": {
+                "id": "nm0680983",
+                "nameText": {
+                  "text": "Elliot Page"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Ariadne"
+                }
+              ]
+            },
+            {
+              "name": {
+                "id": "nm0913822",
+                "nameText": {
+                  "text": "Ken Watanabe"
+                }
+              },
+              "characters": [
+                {
+                  "name": "Saito"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "akas": {
+        "edges": [
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "AE",
+                "text": "United Arab Emirates"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "AU",
+                "text": "Australia"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "BE",
+                "text": "Belgium"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "DE",
+                "text": "Germany"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "DK",
+                "text": "Denmark"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "FR",
+                "text": "France"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "GB",
+                "text": "United Kingdom"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "GR",
+                "text": "Greece"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "IE",
+                "text": "Ireland"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "IN",
+                "text": "India"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "IT",
+                "text": "Italy"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "JP",
+                "text": "Japan"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "NL",
+                "text": "Netherlands"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "NZ",
+                "text": "New Zealand"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "PH",
+                "text": "Philippines"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "SE",
+                "text": "Sweden"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "SG",
+                "text": "Singapore"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "US",
+                "text": "United States"
+              },
+              "language": null
+            }
+          },
+          {
+            "node": {
+              "text": "Inception",
+              "country": {
+                "id": "XWW",
+                "text": "World-wide"
+              },
+              "language": {
+                "id": "en",
+                "text": "English"
+              }
+            }
+          }
+        ]
+      },
+      "certificates": {
+        "edges": [
+          {
+            "node": {
+              "rating": "13",
+              "ratingReason": null,
+              "country": {
+                "id": "AR",
+                "text": "Argentina"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "M",
+              "ratingReason": null,
+              "country": {
+                "id": "AU",
+                "text": "Australia"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "12",
+              "ratingReason": null,
+              "country": {
+                "id": "AT",
+                "text": "Austria"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "14",
+              "ratingReason": null,
+              "country": {
+                "id": "BR",
+                "text": "Brazil"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "PG",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "14A",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "G",
+              "ratingReason": null,
+              "country": {
+                "id": "CA",
+                "text": "Canada"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "14",
+              "ratingReason": null,
+              "country": {
+                "id": "CL",
+                "text": "Chile"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "12",
+              "ratingReason": null,
+              "country": {
+                "id": "CZ",
+                "text": "Czech Republic"
+              }
+            }
+          },
+          {
+            "node": {
+              "rating": "15",
+              "ratingReason": null,
+              "country": {
+                "id": "DK",
+                "text": "Denmark"
+              }
+            }
+          }
+        ]
+      },
+      "isAdult": false,
+      "releaseDate": {
+        "day": 16,
+        "month": 7,
+        "year": 2010,
+        "country": {
+          "id": "US",
+          "text": "United States"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "disclaimer": "Public, commercial, and/or non-private use of the IMDb data provided by this API is not allowed. For limited non-commercial use of IMDb data and the associated requirements see https://help.imdb.com/article/imdb/general-information/can-i-use-imdb-data-in-my-software/G5JTRESSHJBBHTGX#",
+    "experimentalFields": {
+      "janet": [],
+      "markdown": [],
+      "ratings": []
+    }
+  }
+}
