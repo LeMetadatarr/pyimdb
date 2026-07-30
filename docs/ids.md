@@ -5,10 +5,10 @@ IDs, anchored on `imdb_id`, for cross-referencing across sources.
 
 ## The `imdb_id` anchor
 
-The headline key is **`imdb_id`** — emitted for *both* titles (`tt…`) and
+The headline key is **`imdb_id`**, emitted for *both* titles (`tt…`) and
 names (`nm…`). Nearly every other media-metadata source (TMDb, TVDB, Trakt,
-Wikidata, …) carries an IMDb id, so a clean `imdb_id` enables cross-referencing
-across sources.
+Wikidata, and others) carries an IMDb id, so a clean `imdb_id` enables
+cross-referencing across sources.
 
 ```python
 import pyimdb
@@ -47,5 +47,8 @@ pyimdb.hit_to_extra(hit)       # works for title OR name hits
 `imdb_primary_title` / `imdb_name` (depending on the hit kind), `imdb_url`,
 `imdb_title_type`, `imdb_year`, `imdb_end_year`, `imdb_image_url`, `imdb_stars`.
 
-All scalar values are stringified (the `extra` key-space is string-valued);
-list values are JSON-encoded.
+All scalar values are stringified (the `extra` key-space is string-valued).
+List values are JSON-encoded.
+
+---
+[← Models](models.md) · [Home](../README.md) · [HF datasets →](dataset.md)

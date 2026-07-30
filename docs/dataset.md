@@ -2,7 +2,7 @@
 
 `pyimdb.dataset` flattens the IMDb bulk dumps into tabular rows, one HF dataset
 **config** per dump. Each config is a streaming row flattener over
-[`pyimdb.bulk`](bulk-datasets.md) — it never materialises a whole dump in
+[`pyimdb.bulk`](bulk-datasets.md). It never materializes a whole dump in
 memory.
 
 > ## Provenance & licence (read this first)
@@ -38,8 +38,12 @@ from pyimdb import dataset
 for row in dataset.rows("ratings", limit=100):
     print(row)                       # {"imdb_id": ..., "average_rating": ...}
 
-dataset.title_rows(); dataset.name_rows(); dataset.principal_rows()
-dataset.aka_rows(); dataset.crew_rows(); dataset.episode_rows()
+dataset.title_rows()
+dataset.name_rows()
+dataset.principal_rows()
+dataset.aka_rows()
+dataset.crew_rows()
+dataset.episode_rows()
 ```
 
 ## Export to JSON Lines
@@ -63,3 +67,6 @@ dd = DatasetDict({
     for cfg in ("ratings", "titles")
 })
 ```
+
+---
+[← IDs](ids.md) · [Home](../README.md) · [Reverse-engineered endpoints →](reverse-engineering.md)

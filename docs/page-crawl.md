@@ -1,4 +1,4 @@
-# Page crawl — best-effort, WAF-gated
+# Page crawl: best-effort, WAF-gated
 
 `pyimdb.title.get_title(tt)` and `pyimdb.name.get_name(nm)` fetch
 `https://www.imdb.com/title/<tt>/` and `/name/<nm>/` and parse the structured
@@ -7,9 +7,10 @@ metadata embedded in the page. This is the **least reliable** path.
 ## The WAF caveat
 
 IMDb sits behind an Akamai/Cloudflare-style WAF that answers bare requests with
-**HTTP 202** and a challenge stub — no `ld+json`, no `__NEXT_DATA__`. Verified
-live from this environment: plain `urllib`, `curl_cffi` TLS impersonation, and
-an unconfigured `unblock_requests.CloudflareSession` **all** receive 202.
+**HTTP 202** and a challenge stub, with no `ld+json` and no `__NEXT_DATA__`.
+Verified live from this environment: plain `urllib`, `curl_cffi` TLS
+impersonation, and an unconfigured `unblock_requests.CloudflareSession`
+**all** receive 202.
 
 So out of the box `get_title` / `get_name` raise `RuntimeError`. The suggestion
 API and bulk datasets are the working paths and cover the vast majority of
@@ -33,10 +34,10 @@ With a solver reachable, `get_title` returns a populated `Title`.
 
 Two JSON payloads in the page (not brittle CSS):
 
-1. `<script type="application/ld+json">` — schema.org `Movie` / `TVSeries` /
+1. `<script type="application/ld+json">`: schema.org `Movie` / `TVSeries` /
    `Person`. Primary source for name, genres, runtime, `aggregateRating`,
    `datePublished`.
-2. `__NEXT_DATA__` — the Next.js page-props blob (`extract_next_data`).
+2. `__NEXT_DATA__`: the Next.js page-props blob (`extract_next_data`).
 
 The GraphQL endpoint `https://caching.graphql.imdb.com/` is the same WAF-gated
 origin and is left for a future enrichment path.
@@ -54,3 +55,6 @@ against a fixture):
 from pyimdb.title import parse_title, extract_ldjson, extract_next_data
 title = parse_title(html, imdb_id="tt1375666")
 ```
+
+---
+[← Bulk datasets](bulk-datasets.md) · [Home](../README.md) · [Models →](models.md)
