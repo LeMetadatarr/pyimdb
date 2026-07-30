@@ -2,16 +2,16 @@
 
 Typed dataclasses in `pyimdb.models`. Fields mirror the bulk-dataset columns
 and the suggestion-API hit shape, so a model can be filled from either source.
-Every model carries the canonical `imdb_id`. All have `.to_dict()` (drops
-empty values; enums serialise to their string value).
+Every model carries the canonical `imdb_id`. All have `.to_dict()` (it drops
+empty values, and enums serialize to their string value).
 
 ## Enums
 
-- `TitleType` — `title.basics.titleType` values: `movie`, `short`, `tvSeries`,
+- `TitleType`: `title.basics.titleType` values: `movie`, `short`, `tvSeries`,
   `tvEpisode`, `tvMiniSeries`, `tvMovie`, `tvSpecial`, `tvShort`, `tvPilot`,
   `video`, `videoGame`, `musicVideo`, `audiobook`, `podcastSeries`,
   `podcastEpisode`, `unknown`. Use `TitleType.coerce(s)` for safe parsing.
-- `HitType` — the suggestion-API `qid` category: `movie`, `tvSeries`,
+- `HitType`: the suggestion-API `qid` category: `movie`, `tvSeries`,
   `tvMiniSeries`, `tvEpisode`, `short`, `video`, `videoGame`, `name`,
   `unknown`.
 
@@ -52,3 +52,6 @@ A cast/crew credit. `imdb_id` (title), `name_id` (person), `ordering`,
 
 `imdb_id` (the episode), `series_id` (parent series), `season_number`,
 `episode_number`.
+
+---
+[← Page crawl](page-crawl.md) · [Home](../README.md) · [IDs →](ids.md)

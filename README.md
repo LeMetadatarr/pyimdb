@@ -2,14 +2,14 @@
 
 Python metadata client for IMDb. Resolves free-text queries to canonical IMDb
 ids and pulls structured metadata.
-Scrapes **structured metadata only** — never media files.
+It scrapes **structured metadata only**. It never scrapes media files.
 
 Three data paths, in order of reliability:
 
 | Path | What | Key? | Status |
 | --- | --- | --- | --- |
-| **Suggestion API** | `v3.sg.media-imdb.com` autocomplete — the search backbone | none | works |
-| **Bulk datasets** | `datasets.imdbws.com` gzip TSV dumps — the dataset backbone, streamed | none | works |
+| **Suggestion API** | `v3.sg.media-imdb.com` autocomplete, the search backbone | none | works |
+| **Bulk datasets** | `datasets.imdbws.com` gzip TSV dumps, the dataset backbone, streamed | none | works |
 | **Page crawl** | `www.imdb.com` title/name pages, ld+json + `__NEXT_DATA__` | needs solver | best-effort (WAF / HTTP 202) |
 
 No OMDb / official IMDb API key is used or needed.
@@ -39,7 +39,7 @@ pyimdb.hit_to_extra(hit)           # {"imdb_id": "tt15239678", ...}
 for rating in pyimdb.stream_ratings(limit=10):
     print(rating.imdb_id, rating.average_rating, rating.num_votes)
 
-# page crawl (best-effort; raises on WAF unless a solver is configured)
+# page crawl (best-effort, raises on WAF unless a solver is configured)
 title = pyimdb.get_title("tt1375666")
 ```
 
@@ -76,5 +76,5 @@ The IMDb bulk datasets are **personal and non-commercial use only**. See
 - Wire up CI via the `gh-automations` reusable workflows (no `.github/workflows`
   yet).
 - Validate the page-crawl selectors against live HTML once a solver is wired in
-  (currently UNVERIFIED — derived from the schema.org shapes).
+  (currently UNVERIFIED, derived from the schema.org shapes).
 - GraphQL enrichment path (`caching.graphql.imdb.com`, same WAF origin).

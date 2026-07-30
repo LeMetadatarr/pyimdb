@@ -1,4 +1,4 @@
-# Search — the suggestion API
+# Search: the suggestion API
 
 The search backbone is IMDb's suggestion service. It needs no API key and is
 not WAF-gated, so it is the reliable path for resolving a free-text query to a
@@ -42,14 +42,17 @@ pyimdb.first(query)                  # top hit or None
 ```
 
 `scope` is `"all"`, `"titles"` or `"names"`. The general `/suggestion/x/`
-endpoint can also return company (`co…`) and keyword (`in…`) ids — these are
-preserved verbatim in `imdb_id`; filter on `hit.is_title` / `hit.is_name` if
-you only want titles or people.
+endpoint can also return company (`co…`) and keyword (`in…`) ids, preserved
+verbatim in `imdb_id`. Filter on `hit.is_title` / `hit.is_name` if you only
+want titles or people.
 
 ## Notes
 
-- Results are capped by IMDb (typically ~8 hits) — it is a *suggestion* engine,
-  not a full search index. For exhaustive enumeration use the
+- Results are capped by IMDb (typically about 8 hits): it is a *suggestion*
+  engine, not a full search index. For exhaustive enumeration use the
   [bulk datasets](bulk-datasets.md).
-- Throttling is shared with the rest of the transport; tune with
+- Throttling is shared with the rest of the transport, tuned with
   `pyimdb.set_delay(seconds)`.
+
+---
+[← Quickstart](quickstart.md) · [Home](../README.md) · [Bulk datasets →](bulk-datasets.md)

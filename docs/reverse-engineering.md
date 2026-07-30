@@ -2,12 +2,12 @@
 
 This page documents the undocumented (private/unofficial) IMDb endpoints that
 pyimdb targets, and distinguishes them from IMDb's official, documented data paths.
-Everything here is derived directly from the client source; no endpoint or field
+Everything here is derived directly from the client source. No endpoint or field
 is speculative.
 
 ---
 
-## 1. Suggestion API — `v3.sg.media-imdb.com`
+## 1. Suggestion API: `v3.sg.media-imdb.com`
 
 ### Status
 
@@ -25,8 +25,8 @@ https://v3.sg.media-imdb.com/suggestion/names/x/<query>.json     # names only
 
 The `x` path segment is a fixed shard letter that appears in every observed URL
 (`/suggestion/x/`, `/suggestion/titles/x/`, `/suggestion/names/x/`). IMDb's own
-front-end does not vary this letter in practice; the client hard-codes `x` for all
-three scopes (see `pyimdb/search.py: _suggest_url`).
+front-end does not vary this letter in practice. The client hard-codes `x` for all
+three scopes. See `pyimdb/search.py: _suggest_url`.
 
 `<query>` is lower-cased and percent-encoded (`urllib.parse.quote`). No other query
 parameters are sent.
@@ -41,7 +41,7 @@ parameters are sent.
 }
 ```
 
-`d` is the hit list (typically up to ~8 entries); `v` is an opaque schema version
+`d` is the hit list (typically up to about 8 entries). `v` is an opaque schema version
 (always `1` in observed responses). The top-level object may also carry `"e"` on
 error or empty results.
 
@@ -54,7 +54,7 @@ Each hit object:
 | `q` | string | Raw type string, e.g. `feature`, `TV series` |
 | `qid` | string | Machine type token, e.g. `movie`, `tvSeries`, `tvEpisode`, `name` |
 | `y` | int | Release year (single year or series start year) |
-| `yr` | string | Year range for series, e.g. `"2011-2019"`; absent for movies |
+| `yr` | string | Year range for series, e.g. `"2011-2019"`, absent for movies |
 | `i` | object or list | Image: `{"imageUrl": "...", ...}` or legacy `[url, w, h]` tuple |
 | `s` | string or list | Known-for / top cast, comma-separated string or list |
 
@@ -75,13 +75,13 @@ canonical id or basic metadata for a known-name query.
 
 ---
 
-## 2. IMDb title and name pages — `www.imdb.com`
+## 2. IMDb title and name pages: `www.imdb.com`
 
 ### Status
 
 Publicly accessible HTML, but gated by an **Akamai WAF** (also described in
 `pyimdb/title.py` and `pyimdb/name.py` as "Akamai/Cloudflare-style"). This is not
-a private API — the page content is public — but the WAF makes programmatic
+a private API (the page content is public), but the WAF makes programmatic
 access unreliable without an external solver.
 
 ### URLs
@@ -91,7 +91,7 @@ https://www.imdb.com/title/<tt…>/
 https://www.imdb.com/name/<nm…>/
 ```
 
-### WAF behaviour — **UNVERIFIED LIVE**
+### WAF behaviour: **UNVERIFIED LIVE**
 
 From `pyimdb/title.py`:
 
@@ -99,7 +99,7 @@ From `pyimdb/title.py`:
 > and an unconfigured `CloudflareSession` all receive 202.
 
 The WAF returns **HTTP 202** with a JavaScript challenge stub. The stub contains
-no `application/ld+json` script tag and no `__NEXT_DATA__` blob — the two payloads
+no `application/ld+json` script tag and no `__NEXT_DATA__` blob. These are the two payloads
 the parsers target. The `is_blocked` heuristic in `pyimdb/title.py` detects this by
 looking for challenge markers (`just a moment`, `challenge-platform`, `cf-mitigated`,
 `/errors/`) and by the absence of both payloads.
@@ -112,9 +112,9 @@ export PYIMDB_FLARESOLVERR_URL=http://localhost:8191
 
 ### What the client parses (when it gets real HTML)
 
-The parsers target two embedded JSON payloads — **not** brittle CSS selectors:
+The parsers target two embedded JSON payloads, **not** brittle CSS selectors:
 
-1. **`<script type="application/ld+json">`** — schema.org `Movie` / `TVSeries` /
+1. **`<script type="application/ld+json">`**: schema.org `Movie` / `TVSeries` /
    `Person` object embedded in the page. Fields used:
    - title page: `@type`, `name`, `alternateName`, `duration` (ISO-8601),
      `genre`, `image`, `aggregateRating.ratingValue`,
@@ -122,7 +122,7 @@ The parsers target two embedded JSON payloads — **not** brittle CSS selectors:
    - name page: `name`, `birthDate`, `deathDate`, `jobTitle`, `image`, `url`,
      `knownFor`, `performerIn`, `sameAs`
 
-2. **`__NEXT_DATA__`** — Next.js page props blob embedded in a `<script
+2. **`__NEXT_DATA__`**: Next.js page props blob embedded in a `<script
    id="__NEXT_DATA__">` tag. Parsed but not yet used for field extraction (reserved
    for future enrichment).
 
@@ -137,7 +137,7 @@ The page-crawl path raises `RuntimeError` immediately if `is_blocked` returns
 
 ---
 
-## 3. Official bulk datasets — `datasets.imdbws.com`
+## 3. Official bulk datasets: `datasets.imdbws.com`
 
 ### Status
 
@@ -157,21 +157,21 @@ https://datasets.imdbws.com/name.basics.tsv.gz
 ```
 
 Gzip-compressed tab-separated values. No key required. Licensed for
-**personal and non-commercial use only** — see `PROVENANCE.md` and
+**personal and non-commercial use only**. See `PROVENANCE.md` and
 `docs/dataset.md`.
 
 The client streams these files one row at a time via `pyimdb/bulk.py:
-stream_rows`; nothing is loaded entirely into memory.
+stream_rows`. Nothing is loaded entirely into memory.
 
 ---
 
-## 4. Private GraphQL — `caching.graphql.imdb.com`
+## 4. Private GraphQL: `caching.graphql.imdb.com`
 
 ### Status
 
-**Active — verified live.** IMDb's web app sends GraphQL queries to this
+**Active, verified live.** IMDb's web app sends GraphQL queries to this
 endpoint. It accepts raw POST requests with no authentication token and is
-**not WAF-gated** — plain HTTPS works without any solver.
+**not WAF-gated**. Plain HTTPS works without any solver.
 
 Implemented in `pyimdb/graphql.py`.
 
@@ -193,7 +193,7 @@ x-imdb-user-language: en-US
 x-imdb-user-country: US
 ```
 
-The `origin` + `referer` headers appear to be the access gate — requests
+The `origin` + `referer` headers appear to be the access gate. Requests
 without them (or with wrong values) are blocked by Amazon Midway auth.
 
 ### Request shape
@@ -208,9 +208,9 @@ without them (or with wrong values) are blocked by Amazon Midway auth.
 IMDb's own web app also sends GET requests with
 `?operationName=…&extensions={"persistedQuery":{"sha256Hash":"…"}}` for
 cached (persisted) queries. The raw POST approach used here does not
-require knowing the hash — the endpoint accepts any valid query string.
+require knowing the hash. The endpoint accepts any valid query string.
 
-### Title detail — `TitleDetail`
+### Title detail: `TitleDetail`
 
 Operation name used internally: `TitleDetail`. Fields retrieved and verified:
 
@@ -240,7 +240,7 @@ Connections that require pagination (`akas`, `certificates`, `principalCredits`)
 require the `first` or `last` parameter.  The `Cast` type is a union member, so
 `characters` must be accessed via an inline fragment `... on Cast { characters { name } }`.
 
-### Name detail — `NameDetail`
+### Name detail: `NameDetail`
 
 Operation name: `NameDetail`. Fields retrieved and verified:
 
@@ -290,9 +290,9 @@ Operation name: `NameDetail`. Fields retrieved and verified:
 ```
 
 Full responses are saved as offline test fixtures in `tests/fixtures/`:
-- `graphql_title_tt0111161.json` — The Shawshank Redemption
-- `graphql_title_tt1375666.json` — Inception
-- `graphql_name_nm0000151.json` — Morgan Freeman
+- `graphql_title_tt0111161.json`: The Shawshank Redemption
+- `graphql_title_tt1375666.json`: Inception
+- `graphql_name_nm0000151.json`: Morgan Freeman
 
 ---
 
@@ -300,8 +300,11 @@ Full responses are saved as offline test fixtures in `tests/fixtures/`:
 
 | Endpoint | Documented? | Key? | WAF? | pyimdb status |
 | --- | --- | --- | --- | --- |
-| `v3.sg.media-imdb.com/suggestion/…` | No — private autocomplete backend | None | None | **Active — reliable** |
-| `caching.graphql.imdb.com` | No — private GraphQL | None (origin header gate) | None | **Active — verified live** |
-| `www.imdb.com/title/<tt>/` | Public HTML | None | AWS WAF (HTTP 202) | Active — best-effort, solver needed |
-| `www.imdb.com/name/<nm>/` | Public HTML | None | AWS WAF (HTTP 202) | Active — best-effort, solver needed |
-| `datasets.imdbws.com/*.tsv.gz` | **Yes — official** | None | None | **Active — reliable** |
+| `v3.sg.media-imdb.com/suggestion/…` | No, private autocomplete backend | None | None | **Active, reliable** |
+| `caching.graphql.imdb.com` | No, private GraphQL | None (origin header gate) | None | **Active, verified live** |
+| `www.imdb.com/title/<tt>/` | Public HTML | None | AWS WAF (HTTP 202) | Active, best-effort, solver needed |
+| `www.imdb.com/name/<nm>/` | Public HTML | None | AWS WAF (HTTP 202) | Active, best-effort, solver needed |
+| `datasets.imdbws.com/*.tsv.gz` | **Yes, official** | None | None | **Active, reliable** |
+
+---
+[← HF datasets](dataset.md) · [Home](../README.md)
