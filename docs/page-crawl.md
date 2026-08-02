@@ -22,7 +22,7 @@ To get live HTML you must route the transport through a solver that runs a real
 browser. `pyimdb` uses `unblock_requests` with the `PYIMDB` env prefix:
 
 ```bash
-export PYIMDB_FLARESOLVERR_URL=http://localhttp://localhost:8191
+export PYIMDB_FLARESOLVERR_URL=http://localhost:8191
 # optional:
 export PYIMDB_FLARESOLVERR_TIMEOUT=60000      # ms
 export PYIMDB_WAYBACK_FALLBACK=1              # fall back to the Internet Archive
@@ -39,8 +39,11 @@ Two JSON payloads in the page (not brittle CSS):
    `datePublished`.
 2. `__NEXT_DATA__`: the Next.js page-props blob (`extract_next_data`).
 
-The GraphQL endpoint `https://caching.graphql.imdb.com/` is the same WAF-gated
-origin and is left for a future enrichment path.
+For richer detail without the WAF, use the GraphQL endpoint instead
+(`pyimdb.get_title_detail` / `pyimdb.get_name_detail`, see
+[reverse-engineered endpoints](reverse-engineering.md#4-private-graphql-cachinggraphqlimdbcom)):
+it hits `https://caching.graphql.imdb.com/`, a separate origin that is not
+WAF-gated.
 
 > **UNVERIFIED:** because the WAF blocks fetches from this environment, the
 > selectors are derived from the published schema.org shapes, **not** from a
