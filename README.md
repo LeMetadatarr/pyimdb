@@ -4,11 +4,12 @@ Python metadata client for IMDb. Resolves free-text queries to canonical IMDb
 ids and pulls structured metadata.
 It scrapes **structured metadata only**. It never scrapes media files.
 
-Three data paths, in order of reliability:
+Four data paths, in order of reliability:
 
 | Path | What | Key? | Status |
 | --- | --- | --- | --- |
 | **Suggestion API** | `v3.sg.media-imdb.com` autocomplete, the search backbone | none | works |
+| **GraphQL** | `caching.graphql.imdb.com`, rich per-title/person detail | none | works |
 | **Bulk datasets** | `datasets.imdbws.com` gzip TSV dumps, the dataset backbone, streamed | none | works |
 | **Page crawl** | `www.imdb.com` title/name pages, ld+json + `__NEXT_DATA__` | needs solver | best-effort (WAF / HTTP 202) |
 
@@ -34,6 +35,10 @@ for hit in pyimdb.search("inception"):
 hit = pyimdb.first("dune part two")
 pyimdb.canonical_imdb_id(hit)      # "tt15239678"
 pyimdb.hit_to_extra(hit)           # {"imdb_id": "tt15239678", ...}
+
+# GraphQL detail (reliable, no key)
+detail = pyimdb.get_title_detail("tt1375666")
+print(detail.plot, detail.genres, detail.credits)
 
 # bulk datasets, streamed (never loads whole files)
 for rating in pyimdb.stream_ratings(limit=10):
@@ -77,4 +82,9 @@ The IMDb bulk datasets are **personal and non-commercial use only**. See
   yet).
 - Validate the page-crawl selectors against live HTML once a solver is wired in
   (currently UNVERIFIED, derived from the schema.org shapes).
-- GraphQL enrichment path (`caching.graphql.imdb.com`, same WAF origin).
+
+## Related projects
+
+- [unblock_requests](https://github.com/LeMetadatarr/unblock_requests) — the `requests.Session` subclass `pyimdb` uses to clear the page-crawl WAF (curl_cffi / FlareSolverr / Wayback Machine).
+- [anon_requests](https://github.com/LeMetadatarr/anon_requests) — optional IP-rotating transport, installable via `pip install -e .[anon]`.
+- [metadatarr](https://github.com/LeMetadatarr/metadatarr) — cross-source entity resolver that can join `pyimdb`'s `imdb_id` output against MusicBrainz, Wikidata, and other metadata sources.

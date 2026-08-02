@@ -27,9 +27,9 @@ stealth = ["curl-cffi"]
 test = ["pytest"]
 
 [project.urls]
-Homepage = "https://github.com/TigreGotico/pyimdb"
-Repository = "https://github.com/TigreGotico/pyimdb"
-Issues = "https://github.com/TigreGotico/pyimdb/issues"
+Homepage = "https://github.com/LeMetadatarr/pyimdb"
+Repository = "https://github.com/LeMetadatarr/pyimdb"
+Issues = "https://github.com/LeMetadatarr/pyimdb/issues"
 
 [tool.setuptools.dynamic]
 version = { attr = "pyimdb.version.__version__" }

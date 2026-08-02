@@ -1,10 +1,11 @@
 # Quickstart
 
-`pyimdb` is a metadata client for IMDb. It exposes three data paths:
+`pyimdb` is a metadata client for IMDb. It exposes four data paths:
 
 | Path | Module | Reliability | Key? |
 | --- | --- | --- | --- |
 | Suggestion API | [`search`](search.md) | works | none |
+| GraphQL | [`graphql`](reverse-engineering.md#4-private-graphql-cachinggraphqlimdbcom) | works | none |
 | Bulk datasets | [`bulk`](bulk-datasets.md) | works | none |
 | Page crawl | [`title`/`name`](page-crawl.md) | best-effort (WAF) | needs solver |
 
@@ -39,6 +40,18 @@ for rating in pyimdb.stream_ratings(limit=10):
 ```
 
 See [bulk-datasets](bulk-datasets.md) for the streaming model and cache.
+
+## GraphQL detail
+
+```python
+detail = pyimdb.get_title_detail("tt1375666")
+print(detail.plot, detail.genres, detail.credits)
+
+person = pyimdb.get_name_detail("nm0000209")
+print(person.primary_name, person.known_for)
+```
+
+Not WAF-gated, no key needed. See [reverse-engineered endpoints](reverse-engineering.md#4-private-graphql-cachinggraphqlimdbcom).
 
 ## Page crawl (best-effort)
 
