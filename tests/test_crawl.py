@@ -37,6 +37,15 @@ def test_get_title_raises_on_block(monkeypatch):
         assert "WAF" in str(e)
 
 
+def test_duration_minutes_zero_duration_not_dropped():
+    # regression: "PT0H0M" used to collapse to None via `x or None`
+    assert title_mod._duration_minutes({"duration": "PT0H0M"}) == 0
+    assert title_mod._duration_minutes({"duration": "PT45M"}) == 45
+    assert title_mod._duration_minutes({"duration": "PT2H"}) == 120
+    assert title_mod._duration_minutes({"duration": "garbage"}) is None
+    assert title_mod._duration_minutes({}) is None
+
+
 def test_parse_name_ldjson():
     html = (
         '<script type="application/ld+json">'

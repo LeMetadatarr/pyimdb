@@ -73,6 +73,31 @@ def test_dataset_url_and_path():
     assert str(bulk.local_path("title.ratings")).endswith("title.ratings.tsv.gz")
 
 
+def test_download_closes_response_on_write_failure(tmp_path, monkeypatch):
+    # regression: an interrupted download used to leak the streamed response
+    # (never closed) because `download()` had no try/finally around it.
+    closed = []
+
+    class FakeResp:
+        def iter_content(self, chunk_size):
+            yield b"partial-bytes"
+            raise IOError("connection dropped")
+
+        def close(self):
+            closed.append(True)
+
+    monkeypatch.setattr(bulk.transport, "get", lambda url, **kw: FakeResp())
+    monkeypatch.setattr(bulk, "cache_dir", lambda: tmp_path)
+
+    try:
+        bulk.download("title.ratings", force=True)
+        assert False, "expected IOError"
+    except IOError:
+        pass
+
+    assert closed == [True]
+
+
 def test_stream_raw_text():
     import gzip
     import io

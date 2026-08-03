@@ -24,10 +24,10 @@ Live suggestion API — no key, not WAF-gated.
 import pyimdb
 hits = pyimdb.search_titles("inception")
 hit = hits[0]
-# hit.id → "tt1375666", hit.label → "Inception", hit.year → 2010
+# hit.imdb_id → "tt1375666", hit.label → "Inception", hit.year → 2010
 ```
 
-Returns a list of `SearchHit`: `.id` (tt…/nm…), `.label`, `.year`, `.year_end`, `.hit_type` (`HitType.TITLE` / `HitType.NAME`), `.stars` (list of top cast names), `.image_url`.
+Returns a list of `SearchHit`: `.imdb_id` (tt…/nm…), `.label`, `.year`, `.end_year`, `.kind` (`HitType.MOVIE` / `HitType.NAME` / …), `.stars` (list of top cast names), `.image_url`.
 Use `search_names("cillian murphy")` to resolve a person to their `nm…` id.
 
 ---
@@ -38,13 +38,13 @@ Live GraphQL — no key, no solver needed.
 
 ```python
 detail = pyimdb.get_title_detail("tt1375666")
-print(detail.title, detail.year, detail.rating, detail.votes)
+print(detail.primary_title, detail.start_year, detail.average_rating, detail.num_votes)
 print(detail.plot)
 for c in detail.credits[:5]:
     print(c.category, c.name, c.characters)
 ```
 
-Returns `TitleDetail` with fields: `.title`, `.year`, `.title_type`, `.runtime_seconds`, `.rating` (float), `.votes` (int), `.plot` (plain text), `.genres` (list[str]), `.credits` (list[`CreditEntry`]: `.name_id`, `.name`, `.category`, `.characters`), `.akas` (list[`AkaEntry`]: `.text`, `.country`, `.language`), `.certificates` (list[`CertificateEntry`]: `.rating`, `.country`), `.release_date`, `.is_adult`.
+Returns `TitleDetail` with fields: `.primary_title`, `.start_year`, `.end_year`, `.title_type`, `.runtime_seconds`, `.average_rating` (float), `.num_votes` (int), `.plot` (plain text), `.genres` (list[str]), `.credits` (list[`CreditEntry`]: `.name_id`, `.name`, `.category`, `.characters`), `.akas` (list[`AkaEntry`]: `.text`, `.country`, `.language`), `.certificates` (list[`CertificateEntry`]: `.rating`, `.country`), `.release_day` / `.release_month` / `.release_year` / `.release_country`, `.is_adult`.
 
 ---
 
@@ -54,12 +54,12 @@ Live GraphQL — no key, no solver needed.
 
 ```python
 detail = pyimdb.get_name_detail("nm0000093")
-print(detail.name, detail.birth_year)
+print(detail.primary_name, detail.birth_year)
 for kf in detail.known_for:
-    print(kf.title_id, kf.title, kf.year)
+    print(kf.imdb_id, kf.title, kf.year)
 ```
 
-Returns `NameDetail` with: `.name`, `.birth_year`, `.death_year`, `.professions` (list[str]), `.bio` (plain text), `.known_for` (list[`KnownForEntry`]: `.title_id`, `.title`, `.year`, `.characters`).
+Returns `NameDetail` with: `.primary_name`, `.birth_year`, `.death_year`, `.primary_professions` (list[str]), `.bio` (plain text), `.known_for` (list[`KnownForEntry`]: `.imdb_id`, `.title`, `.year`).
 
 ---
 
@@ -69,7 +69,7 @@ Convenience: top suggestion in one call.
 
 ```python
 hit = pyimdb.first("the godfather", scope="titles")
-detail = pyimdb.get_title_detail(hit.id)
+detail = pyimdb.get_title_detail(hit.imdb_id)
 ```
 
 ---
@@ -103,7 +103,7 @@ for principal in pyimdb.stream_principals():
 
 # stream names
 for name in pyimdb.stream_names():
-    ...  # Name: .name_id, .primary_name, .birth_year, .known_for_titles
+    ...  # Name: .imdb_id, .primary_name, .birth_year, .known_for_titles
 ```
 
 Bulk datasets: `title.basics`, `title.ratings`, `title.akas`, `title.episode`, `title.principals`, `name.basics`.

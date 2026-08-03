@@ -76,4 +76,4 @@ index from one stream and consult it while streaming the other. See
 `examples/07_top_rated_movies.py`.
 
 ---
-[← Search](search.md) · [Home](../README.md) · [Page crawl →](page-crawl.md)
+[← GraphQL](graphql.md) · [Home](../README.md) · [Page crawl →](page-crawl.md)
