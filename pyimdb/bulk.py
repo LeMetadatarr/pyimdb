@@ -79,12 +79,15 @@ def download(name: str, *, force: bool = False, chunk: int = 1 << 20) -> Path:
         return path
     url = dataset_url(name)
     resp = transport.get(url, stream=True)
-    tmp = path.with_suffix(path.suffix + ".part")
-    with open(tmp, "wb") as fh:
-        for block in resp.iter_content(chunk_size=chunk):
-            if block:
-                fh.write(block)
-    tmp.replace(path)
+    try:
+        tmp = path.with_suffix(path.suffix + ".part")
+        with open(tmp, "wb") as fh:
+            for block in resp.iter_content(chunk_size=chunk):
+                if block:
+                    fh.write(block)
+        tmp.replace(path)
+    finally:
+        resp.close()
     return path
 
 

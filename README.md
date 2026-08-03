@@ -69,6 +69,7 @@ The IMDb bulk datasets are **personal and non-commercial use only**. See
 
 - [Quickstart](docs/quickstart.md)
 - [Search (suggestion API)](docs/search.md)
+- [GraphQL (rich live detail)](docs/graphql.md)
 - [Bulk datasets](docs/bulk-datasets.md)
 - [Page crawl & caveats](docs/page-crawl.md)
 - [Models](docs/models.md)

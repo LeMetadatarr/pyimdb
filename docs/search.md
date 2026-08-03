@@ -55,4 +55,4 @@ want titles or people.
   `pyimdb.set_delay(seconds)`.
 
 ---
-[← Quickstart](quickstart.md) · [Home](../README.md) · [Bulk datasets →](bulk-datasets.md)
+[← Quickstart](quickstart.md) · [Home](../README.md) · [GraphQL →](graphql.md)

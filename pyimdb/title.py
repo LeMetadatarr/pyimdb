@@ -96,7 +96,9 @@ def _duration_minutes(ld: Dict[str, Any]) -> Optional[int]:
         return None
     h = re.search(r"(\d+)H", dur)
     m = re.search(r"(\d+)M", dur)
-    return (int(h.group(1)) * 60 if h else 0) + (int(m.group(1)) if m else 0) or None
+    if h is None and m is None:
+        return None
+    return (int(h.group(1)) * 60 if h else 0) + (int(m.group(1)) if m else 0)
 
 
 def _map_ldtype(ld_type: Optional[str]) -> TitleType:
