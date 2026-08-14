@@ -35,7 +35,12 @@ plain HTTPS POST works without any solver.
 ``primaryProfessions``, ``primaryImage``, ``knownFor`` (first 5 titles),
 ``bio`` (plainText).
 
-Both endpoints are **verified live** against ``caching.graphql.imdb.com``
+**Technical specs** fields returned (via ``get_technical_specs``):
+``colorations`` (color/B&W/Colorized), ``sound_mixes`` (Silent/Mono/Dolby/…),
+``aspect_ratios``, ``cameras``, ``negative_formats``, ``printed_formats``,
+``processes``, ``laboratories``, ``film_lengths``.
+
+All endpoints are **verified live** against ``caching.graphql.imdb.com``
 (direct HTTPS POST, no solver).  See ``docs/reverse-engineering.md`` for
 the full response shapes with example payloads.
 """
@@ -53,7 +58,7 @@ from pyimdb.models import (
     _drop_none,
 )
 
-# ─── GraphQL headers ────────────────────────────────────────────────────────
+# ─── GraphQL headers ─────────────────────────────────────────────────────────
 
 _GQL_HEADERS = {
     "accept": "application/graphql+json, application/json",
@@ -518,4 +523,140 @@ def get_name_detail(imdb_id: str) -> NameDetail:
         image_height=image.get("height"),
         known_for=known_for,
         bio=bio_node.get("plainText"),
+    )
+
+
+# ─── Technical specs ──────────────────────────────────────────────────────────
+
+
+@dataclass
+class TechnicalSpecs:
+    """Technical specifications for a title from IMDb's GraphQL API.
+
+    Fields mirror the IMDb ``/title/<id>/technical/`` page:
+    - ``colorations``: e.g. ``["Color"]``, ``["Black and White"]``,
+      ``["Color", "Black and White"]`` for mixed, ``["Colorized"]``.
+    - ``coloration_concept_ids``: canonical concept IDs (``"color"``,
+      ``"black_and_white"``, ``"colorized"``…) — use these for filtering.
+    - ``sound_mixes``: e.g. ``["Silent"]``, ``["Dolby Digital", "DTS"]``.
+    - ``sound_mix_ids``: machine-readable ids (``"silent"``, ``"dolby_digital"``…).
+    - ``aspect_ratios``: e.g. ``["1.33 : 1"]``.
+    - ``cameras``: camera + lens strings.
+    - ``negative_formats``: e.g. ``["35 mm"]``.
+    - ``printed_formats``: e.g. ``["35 mm", "70 mm"]``.
+    - ``processes``: e.g. ``["Spherical"]``, ``["Technicolor"]``.
+    - ``laboratories``: lab name strings.
+    - ``film_lengths``: lengths in metres.
+    """
+
+    imdb_id: str
+    colorations: List[str] = field(default_factory=list)
+    coloration_concept_ids: List[str] = field(default_factory=list)
+    sound_mixes: List[str] = field(default_factory=list)
+    sound_mix_ids: List[str] = field(default_factory=list)
+    aspect_ratios: List[str] = field(default_factory=list)
+    cameras: List[str] = field(default_factory=list)
+    negative_formats: List[str] = field(default_factory=list)
+    printed_formats: List[str] = field(default_factory=list)
+    processes: List[str] = field(default_factory=list)
+    laboratories: List[str] = field(default_factory=list)
+    film_lengths: List[int] = field(default_factory=list)
+
+    @property
+    def is_color(self) -> Optional[bool]:
+        """True if any coloration is colour, False if all B&W, None if unknown."""
+        if not self.coloration_concept_ids:
+            return None
+        if any("black" in c for c in self.coloration_concept_ids):
+            if any(c == "color" for c in self.coloration_concept_ids):
+                return True  # mixed
+            return False
+        return True
+
+    @property
+    def is_silent(self) -> Optional[bool]:
+        """True if sound_mix_ids contains ``"silent"``."""
+        if not self.sound_mix_ids:
+            return None
+        return "silent" in self.sound_mix_ids
+
+    def to_dict(self) -> dict:
+        return _drop_none(asdict(self))
+
+
+_TECH_QUERY = """
+query TechnicalSpecs($id: ID!) {
+  title(id: $id) {
+    id
+    technicalSpecifications {
+      colorations {
+        items { text conceptId }
+      }
+      soundMixes {
+        items { id text }
+      }
+      aspectRatios {
+        items { aspectRatio }
+      }
+      cameras {
+        items { camera }
+      }
+      negativeFormats {
+        items { negativeFormat }
+      }
+      printedFormats {
+        items { printedFormat }
+      }
+      processes {
+        items { process }
+      }
+      laboratories {
+        items { laboratory }
+      }
+      filmLengths {
+        items { filmLength }
+      }
+    }
+  }
+}
+"""
+
+
+def get_technical_specs(imdb_id: str) -> TechnicalSpecs:
+    """Fetch technical specifications for a title from IMDb's GraphQL API.
+
+    Returns a :class:`TechnicalSpecs` with coloration (color/B&W/silent flags),
+    sound mixes, aspect ratios, cameras, film formats, processes, and labs.
+
+    Not WAF-gated — works without a solver.
+
+    Args:
+        imdb_id: canonical ``tt…`` identifier.
+
+    Raises:
+        ``requests.HTTPError`` on a non-2xx response.
+        ``ValueError`` if the API returns no data for the id.
+    """
+    raw = _check(_post(_TECH_QUERY, {"id": imdb_id}), "title")
+    specs = raw.get("technicalSpecifications") or {}
+
+    def _texts(key: str, field_name: str) -> List[str]:
+        return [item[field_name] for item in (specs.get(key) or {}).get("items", []) if item.get(field_name)]
+
+    coloration_items = (specs.get("colorations") or {}).get("items") or []
+    sound_items = (specs.get("soundMixes") or {}).get("items") or []
+
+    return TechnicalSpecs(
+        imdb_id=raw.get("id", imdb_id),
+        colorations=[i["text"] for i in coloration_items if i.get("text")],
+        coloration_concept_ids=[i["conceptId"] for i in coloration_items if i.get("conceptId")],
+        sound_mixes=[i["text"] for i in sound_items if i.get("text")],
+        sound_mix_ids=[i["id"] for i in sound_items if i.get("id")],
+        aspect_ratios=_texts("aspectRatios", "aspectRatio"),
+        cameras=_texts("cameras", "camera"),
+        negative_formats=_texts("negativeFormats", "negativeFormat"),
+        printed_formats=_texts("printedFormats", "printedFormat"),
+        processes=_texts("processes", "process"),
+        laboratories=_texts("laboratories", "laboratory"),
+        film_lengths=[i["filmLength"] for i in (specs.get("filmLengths") or {}).get("items", []) if i.get("filmLength") is not None],
     )
