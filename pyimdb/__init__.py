@@ -56,12 +56,14 @@ from pyimdb.title import get_title, parse_title
 from pyimdb.graphql import (
     get_title_detail,
     get_name_detail,
+    get_technical_specs,
     TitleDetail,
     NameDetail,
     CreditEntry,
     AkaEntry,
     CertificateEntry,
     KnownForEntry,
+    TechnicalSpecs,
 )
 from pyimdb.transport import reset_session, set_delay, set_session
 
@@ -98,12 +100,14 @@ __all__ = [
     # GraphQL live detail
     "get_title_detail",
     "get_name_detail",
+    "get_technical_specs",
     "TitleDetail",
     "NameDetail",
     "CreditEntry",
     "AkaEntry",
     "CertificateEntry",
     "KnownForEntry",
+    "TechnicalSpecs",
     # page crawl (best-effort)
     "get_title",
     "parse_title",

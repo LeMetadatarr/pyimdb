@@ -27,8 +27,9 @@ from typing import Any, Dict, Iterable, Iterator, Optional
 
 from pyimdb import bulk
 from pyimdb._clean import to_int, tsv_list, tsv_value
+from pyimdb.graphql import get_technical_specs
 
-CONFIGS = ("titles", "names", "ratings", "principals", "akas", "crew", "episodes")
+CONFIGS = ("titles", "names", "ratings", "principals", "akas", "crew", "episodes", "technical_specs")
 
 
 # ---- per-config row flatteners ----------------------------------------
@@ -115,6 +116,50 @@ def episode_rows(*, limit: Optional[int] = None, **kw: Any) -> Iterator[Dict[str
         }
 
 
+def technical_specs_rows(*, limit: Optional[int] = None, title_types: Optional[list] = None, **kw: Any) -> Iterator[Dict[str, Any]]:
+    """Stream technical specs rows by fetching live GraphQL for each title.
+
+    Only fetches titles whose ``title_type`` is in *title_types* (defaults to
+    ``["movie", "short", "tvMovie"]``). Resumable: pass ``seen_ids`` (a set of
+    already-fetched ``imdb_id`` strings) to skip on restart.
+
+    This is a live network operation — one GraphQL request per title. Use
+    ``delay`` on the transport (``pyimdb.set_delay``) to be polite.
+    """
+    if title_types is None:
+        title_types = ["movie", "short", "tvMovie", "tvSpecial"]
+    seen: set = kw.pop("seen_ids", set())
+    n = 0
+    for t in bulk.stream_titles(**kw):
+        if t.title_type.value not in title_types:
+            continue
+        if t.imdb_id in seen:
+            continue
+        try:
+            specs = get_technical_specs(t.imdb_id)
+        except Exception:
+            continue
+        yield {
+            "imdb_id": specs.imdb_id,
+            "colorations": specs.colorations,
+            "coloration_concept_ids": specs.coloration_concept_ids,
+            "is_color": specs.is_color,
+            "is_silent": specs.is_silent,
+            "sound_mixes": specs.sound_mixes,
+            "sound_mix_ids": specs.sound_mix_ids,
+            "aspect_ratios": specs.aspect_ratios,
+            "cameras": specs.cameras,
+            "negative_formats": specs.negative_formats,
+            "printed_formats": specs.printed_formats,
+            "processes": specs.processes,
+            "laboratories": specs.laboratories,
+            "film_lengths": specs.film_lengths,
+        }
+        n += 1
+        if limit and n >= limit:
+            break
+
+
 _ROW_FUNCS = {
     "titles": title_rows,
     "names": name_rows,
@@ -123,6 +168,7 @@ _ROW_FUNCS = {
     "akas": aka_rows,
     "crew": crew_rows,
     "episodes": episode_rows,
+    "technical_specs": technical_specs_rows,
 }
 
 
